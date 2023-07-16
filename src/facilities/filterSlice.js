@@ -1,30 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    smartphones: false,
-    laptops: false,
-    fragrances: false,
-    skincare: false
+    categoryList: []
 }
 
 const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        filterSmartphones: (state, action) => {
-            state.smartphones = !state.smartphones
+        addCategory: (state, { payload }) => {
+            state.categoryList.push(payload);
+            console.log(state.categoryList[0])
         },
-        filterLaptops: (state, action) => {
-            state.laptops = !state.laptops
-        },
-        filterFragrances: (state, action) => {
-            state.fragrances = !state.fragrances
-        },
-        filterSkincare: (state, action) => {
-            state.skincare = !state.skincare
+        removeCategory: (state, { payload }) => {
+            state.categoryList = state.categoryList.filter((category) => category !== payload);
+            console.log("remove")
+            console.log(state.categoryList[0])
         }
     }
 });
 
-export const { filterSmartphones, filterLaptops, filterSkincare, filterFragrances } = filterSlice.actions;
+export const { addCategory, removeCategory } = filterSlice.actions;
+// export const { filterSmartphones, filterLaptops, filterSkincare, filterFragrances } = filterSlice.actions;
 export default filterSlice.reducer;

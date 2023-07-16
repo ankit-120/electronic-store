@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { filterSmartphones, filterLaptops, filterSkincare, filterFragrances } from '../facilities/filterSlice';
+import { addCategory, removeCategory } from '../facilities/filterSlice';
 
 const Filter = () => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [showContent, setShowContent] = useState(false);
-    const { smartphones, laptops, skincare, fragrances } = useSelector((state) => state.filters);
+    const categoryList = useSelector((state) => state.filters.categoryList);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -29,26 +29,30 @@ const Filter = () => {
 
                 <div className="bg-gray-200 p-4">
                     <input type="checkbox" id="smartphones" value="smartphones"
-                        checked={smartphones}
-                        onChange={() => dispatch(filterSmartphones())} />
+                        checked={categoryList.includes('smartphones')}
+                        onChange={
+                            (e) => !categoryList.includes('smartphones') ? dispatch(addCategory(e.target.value)) : dispatch(removeCategory(e.target.value))} />
                     <label htmlFor="smartphones">Smartphones</label>
                 </div>
                 <div className="bg-gray-200 p-4">
                     <input type="checkbox" id="laptops" value="laptops"
-                        checked={laptops}
-                        onChange={() => dispatch(filterLaptops())} />
+                        checked={categoryList.includes('laptops')}
+                        onChange={
+                            (e) => !categoryList.includes('laptops') ? dispatch(addCategory(e.target.value)) : dispatch(removeCategory(e.target.value))} />
                     <label htmlFor="laptops">Laptops</label>
                 </div>
                 <div className="bg-gray-200 p-4">
                     <input type="checkbox" id="skincare" value="skincare"
-                        checked={skincare}
-                        onChange={() => dispatch(filterSkincare())} />
+                        checked={categoryList.includes('skincare')}
+                        onChange={
+                            (e) => !categoryList.includes('skincare') ? dispatch(addCategory(e.target.value)) : dispatch(removeCategory(e.target.value))} />
                     <label htmlFor="skincare">Skincare</label>
                 </div>
                 <div className="bg-gray-200 p-4">
                     <input type="checkbox" id="fragrances" value="fragrances"
-                        checked={fragrances}
-                        onChange={() => dispatch(filterFragrances())} />
+                        checked={categoryList.includes('fragrances')}
+                        onChange={
+                            (e) => !categoryList.includes('fragrances') ? dispatch(addCategory(e.target.value)) : dispatch(removeCategory(e.target.value))} />
                     <label htmlFor="fragrances">Fragrances</label>
                 </div>
             </div>

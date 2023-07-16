@@ -9,7 +9,7 @@ import { fetchProduct } from "../facilities/productSlice";
 const Product = () => {
 
     const products = useSelector((state) => state.products.products);
-    const { smartphones, laptops, skincare, fragrances } = useSelector((state) => state.filters);
+    const categoryList = useSelector((state) => state.filters.categoryList);
     const dispatch = useDispatch();
 
     const fetchProducts = async () => {
@@ -24,15 +24,14 @@ const Product = () => {
 
     const modifyProducts = () => {
         let modifiedProd = products;
-        if (smartphones)
-            modifiedProd = modifiedProd.filter((prod) => prod.category === 'smartphones');
-        if (laptops)
-            modifiedProd = modifiedProd.filter((prod) => prod.category === 'laptops');
-        // modifiedProd = [...modifiedProd, products.filter((prod) => prod.category === 'laptops')]
-        if (skincare)
-            modifiedProd = modifiedProd.filter((prod) => prod.category === 'skincare');
-        if (fragrances)
-            modifiedProd = modifiedProd.filter((prod) => prod.category === 'fragrances');
+        if (categoryList.length !== 0) {
+            modifiedProd = modifiedProd.filter((prod) => {
+                for (let i = 0; i < categoryList.length; i++) {
+                    if (prod.category === categoryList[i])
+                        return prod;
+                }
+            })
+        }
         return modifiedProd;
     }
 
