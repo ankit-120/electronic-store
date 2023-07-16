@@ -19,7 +19,6 @@ const Product = () => {
     }
     useEffect(() => {
         fetchProducts();
-        console.log("1")
     }, []);
 
     const modifyProducts = () => {
@@ -38,11 +37,11 @@ const Product = () => {
     console.log(products)
 
     return (
-        <div className="grid grid-cols-4 h-[90vh]">
+        <div className="grid grid-cols-4">
             <div className="md:col-span-1">
                 <Filter />
             </div>
-            <div className="col-span-4 md:col-span-3 overflow-y-scroll">
+            <div className="col-span-4 md:col-span-3">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {
                         modifyProducts().map((prod) => (
