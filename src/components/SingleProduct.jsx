@@ -1,13 +1,18 @@
 const SingleProduct = ({ prod }) => {
     return (
-        <div className="w-full border-2 border-indigo-400 p-3">
-            <div className="border-2 border-indigo-300 p-2">
-                <img className="w-full h-80 object-contain"
-                    src={prod.images[0]}
+        <div className="w-full p-3 hover:bg-gray-200 flex flex-col items-center">
+            <div className="p-2">
+                <img className="w-full h-60 object-contain"
+                    src={prod.thumbnail}
                     alt={prod.title} />
             </div>
-            <div>Product Name</div>
-            <div>Add to cart</div>
+            <div className="font-bold text-yellow-600">{prod.brand}</div>
+            <div>{prod.title}</div>
+            <div>₹{prod.price}
+                <span className="text-yellow-600">
+                    ({prod.discountPercentage} %off)
+                </span>
+            </div>
         </div>
     )
 }

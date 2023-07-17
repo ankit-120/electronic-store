@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom"
+import { BiSearch } from 'react-icons/bi';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateSearch } from "../facilities/filterSlice";
 
 const Header = () => {
+
+    const dispatch = useDispatch();
+
     return (
         <div>
             <header className="text-gray-600 body-font">
@@ -16,8 +23,16 @@ const Header = () => {
                         <Link to={'/about'} className="mr-5 hover:text-gray-900">About</Link>
                         <Link to={'/products'} className="mr-5 hover:text-gray-900">Products</Link>
                         <Link to={'/contact'} className="mr-5 hover:text-gray-900">Contact</Link>
-
                     </nav>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            placeholder="Search"
+                            className="pl-4 pr-10 py-2 rounded border border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
+                            onChange={(e) => dispatch(updateSearch(e.target.value))}
+                        />
+                        <BiSearch className="absolute right-3 top-2 text-gray-400 h-6 w-4" />
+                    </div>
                 </div>
             </header>
         </div>

@@ -5,3 +5,7 @@ export function getProducts() {
 export function getCategories() {
     return 'https://dummyjson.com/products/categories';
 }
+
+export function getProduct(id) {
+    return `https://dummyjson.com/products/${id}`
+}

@@ -1,22 +1,24 @@
 import { useState, useEffect } from 'react';
-import { getCategories } from '../apis';
-import axios from 'axios';
 import FilterDropdown from './FilterDropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import PriceFilterDropdown from './PriceFilterDropdown';
+import { clearFilter } from '../facilities/filterSlice';
+import { addCategory, removeCategory, addBrand, removeBrand } from '../facilities/filterSlice';
 
 const Filter = () => {
     const [isSmallScreen, setIsSmallScreen] = useState(false);
     const [showContent, setShowContent] = useState(false);
-    const categoryList = useSelector((state) => state.filters.categoryList);
-    const [categories, setCategories] = useState([]);
+    const { categoryList, brandList } = useSelector((state) => state.filters);
+    const products = useSelector((state) => state.products.products);
+    const dispatch = useDispatch();
 
-    useEffect(() => {
-        const fetchCategory = async () => {
-            const { data } = await axios.get(getCategories());
-            setCategories(data)
-        }
-        fetchCategory();
-    }, [])
+    const setCategories = () => {
+        return [...new Set(products.map((product) => product.category))];
+    }
+
+    const setBrands = () => {
+        return [...new Set(products.map((product) => product.brand))];
+    }
 
     useEffect(() => {
         const checkScreenSize = () => {
@@ -37,7 +39,14 @@ const Filter = () => {
         return (
             <div>
                 <div>
-                    <FilterDropdown filters={categories} selectedFilters={categoryList} />
+                    <FilterDropdown filters={setCategories()} selectedFilters={categoryList} add={addCategory} remove={removeCategory} />
+                    <FilterDropdown filters={setBrands()} selectedFilters={brandList} add={addBrand} remove={removeBrand} />
+                    <PriceFilterDropdown />
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => dispatch(clearFilter())}>
+                        Click Me
+                    </button>
+
                 </div>
 
             </div>
@@ -54,8 +63,9 @@ const Filter = () => {
             </button>
 
             {showContent && (
-                <div className="bg-gray-200 p-4">
-                    {/* <p><FilterModal /></p> */}
+                <div className="absolute left-0 bg-white flex flex-col items-start min-h-screen w-full pl-7">
+                    <FilterDropdown filters={categories} selectedFilters={categoryList} />
+                    <FilterDropdown filters={brand} selectedFilters={categoryList} />
                 </div>
             )}
         </div>
