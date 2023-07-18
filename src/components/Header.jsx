@@ -22,6 +22,7 @@ const Header = () => {
                         <Link to={'/'} className="mr-5 hover:text-gray-900">Home</Link>
                         <Link to={'/about'} className="mr-5 hover:text-gray-900">About</Link>
                         <Link to={'/products'} className="mr-5 hover:text-gray-900">Products</Link>
+                        <Link to={'/cart'} className="mr-5 hover:text-gray-900">Cart</Link>
                         <Link to={'/contact'} className="mr-5 hover:text-gray-900">Contact</Link>
                     </nav>
                     <div className="relative">

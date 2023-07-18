@@ -6,6 +6,7 @@ import Contact from './pages/Contact';
 import Header from './components/Header';
 import './App.css'
 import SingleProductPage from './pages/SingleProductPage';
+import Cart from './pages/Cart';
 
 
 const App = () => {
@@ -20,6 +21,7 @@ const App = () => {
             <Route path='/products' element={<Product />} />
             <Route path='/contact' element={<Contact />} />
             <Route path='/product/:id' element={<SingleProductPage />} />
+            <Route path='/cart' element={<Cart />} />
           </Routes>
         </BrowserRouter>
       </div>

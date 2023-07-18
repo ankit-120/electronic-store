@@ -6,12 +6,12 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProduct } from "../facilities/productSlice";
 import { Link } from "react-router-dom";
+import CircularLoader from "../components/CircularLoader";
 
 const Product = () => {
 
     const products = useSelector((state) => state.products.products);
-    const { categoryList, search, price, brandList } = useSelector((state) => state.filters);
-    // const search = useSelector((state) => (state.filters.search));
+    const { categoryList, search, price, brandList } = useSelector((state) => state.filters);;
     const dispatch = useDispatch();
 
     const fetchProducts = async () => {
@@ -57,7 +57,9 @@ const Product = () => {
         return modifiedProd;
     }
 
-    console.log(products)
+    if (modifyProducts().length === 0) {
+        return <CircularLoader />
+    }
 
     return (
         <div className="grid grid-cols-4">
