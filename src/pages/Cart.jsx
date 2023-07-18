@@ -14,7 +14,7 @@ const Cart = () => {
         setCartItem(JSON.parse(localStorage.getItem('cartItem')));
     }, [cart])
 
-    if (!cart) {
+    if (cartItem.length === 0) {
         return <CircularLoader />
     }
 
