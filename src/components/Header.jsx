@@ -18,7 +18,7 @@ const Header = () => {
                         <img className="w-10 h-10"
                             src="/images/logo.png"
                             alt="logo" />
-                        <span className="ml-3 text-xl">Tailblocks</span>
+                        <span className="ml-3 text-xl">Electronic Store</span>
                     </div>
                     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
                         <Link to={'/'} className="mr-5 hover:text-gray-900">Home</Link>
