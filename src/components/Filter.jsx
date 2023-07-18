@@ -64,8 +64,13 @@ const Filter = () => {
 
             {showContent && (
                 <div className="absolute left-0 bg-white flex flex-col items-start min-h-screen w-full pl-7">
-                    <FilterDropdown filters={categories} selectedFilters={categoryList} />
-                    <FilterDropdown filters={brand} selectedFilters={categoryList} />
+                    <FilterDropdown filters={setCategories()} selectedFilters={categoryList} add={addCategory} remove={removeCategory} />
+                    <FilterDropdown filters={setBrands()} selectedFilters={brandList} add={addBrand} remove={removeBrand} />
+                    <PriceFilterDropdown />
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => dispatch(clearFilter())}>
+                        Click Me
+                    </button>
                 </div>
             )}
         </div>
