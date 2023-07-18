@@ -31,13 +31,13 @@ const AddToCart = ({ product }) => {
                 {
                     checkCart() ? (
                         <Link to={'/cart'}>
-                            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105">
+                            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105">
                                 Go to Cart
                             </button>
                         </Link>
                     ) :
                         (
-                            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105"
+                            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105"
                                 onClick={() => {
                                     dispatch(addToCart(product))
                                     setIsAdded(true)

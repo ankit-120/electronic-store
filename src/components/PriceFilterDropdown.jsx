@@ -14,7 +14,7 @@ const Dropdown = () => {
     return (
         <div className="relative">
             <div
-                className=" text-black font-semibold py-3 px-6 rounded-none shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105 focus:outline-none"
+                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 w-full rounded-none"
                 onClick={toggleDropdown}
             >
                 Toggle Dropdown

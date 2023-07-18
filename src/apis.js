@@ -9,3 +9,7 @@ export function getCategories() {
 export function getProduct(id) {
     return `https://dummyjson.com/products/${id}`
 }
+
+export function getFeaturedProduct(limit) {
+    return `https://dummyjson.com/products?limit=${limit}&skip=3`
+}
