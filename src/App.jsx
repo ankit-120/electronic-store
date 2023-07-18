@@ -7,11 +7,12 @@ import Header from './components/Header';
 import './App.css'
 import SingleProductPage from './pages/SingleProductPage';
 import Cart from './pages/Cart';
+import Footer from './components/Footer';
 
 
 const App = () => {
   return (
-    <div className='bg-slate-100'>
+    <div className='bg-gray-50'>
       <BrowserRouter>
         <Header />
         <div className=' flex justify-center md:mt-[100px] mt-[200px]'>
@@ -26,6 +27,7 @@ const App = () => {
             </Routes>
           </div>
         </div>
+        <Footer />
       </BrowserRouter>
     </div>
   )

@@ -15,7 +15,7 @@ const Home = () => {
                         </p>
                         <Link to={'/products'}>
                             <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold my-5 py-2 px-4 rounded-none shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105">
-                                Go to Cart
+                                Shop Now
                             </button>
                         </Link>
                     </div>
