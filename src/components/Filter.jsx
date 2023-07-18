@@ -14,11 +14,11 @@ const Filter = () => {
 
     const setCategories = () => {
         return [...new Set(products.map((product) => product.category))];
-    }
+    };
 
     const setBrands = () => {
         return [...new Set(products.map((product) => product.brand))];
-    }
+    };
 
     useEffect(() => {
         const checkScreenSize = () => {
@@ -35,41 +35,45 @@ const Filter = () => {
         setShowContent(!showContent);
     };
 
-    if (!isSmallScreen) {
-        return (
-            <div>
-                <div>
-                    <FilterDropdown filters={setCategories()} selectedFilters={categoryList} add={addCategory} remove={removeCategory} />
-                    <FilterDropdown filters={setBrands()} selectedFilters={brandList} add={addBrand} remove={removeBrand} />
-                    <PriceFilterDropdown />
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => dispatch(clearFilter())}>
-                        Click Me
-                    </button>
-
-                </div>
-
-            </div>
-        );
-    }
-
     return (
-        <div>
-            <button
-                onClick={toggleContent}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-                Toggle
-            </button>
+        <div className="bg-white rounded-md p-4 shadow-md">
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-semibold">Filter Options</h2>
+                {isSmallScreen && (
+                    <button
+                        onClick={toggleContent}
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
+                    >
+                        {showContent ? 'Hide Filters' : 'Show Filters'}
+                    </button>
+                )}
+            </div>
 
-            {showContent && (
-                <div className="absolute left-0 bg-white flex flex-col items-start min-h-screen w-full pl-7">
+            {(!isSmallScreen || showContent) && (
+                <div className="space-y-4">
                     <FilterDropdown filters={setCategories()} selectedFilters={categoryList} add={addCategory} remove={removeCategory} />
                     <FilterDropdown filters={setBrands()} selectedFilters={brandList} add={addBrand} remove={removeBrand} />
                     <PriceFilterDropdown />
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => dispatch(clearFilter())}>
-                        Click Me
+                    {!isSmallScreen && (
+                        <div className="flex justify-center">
+                            <button
+                                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 w-full rounded-none"
+                                onClick={() => dispatch(clearFilter())}
+                            >
+                                Clear Filters
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {isSmallScreen && showContent && (
+                <div className="mt-4">
+                    <button
+                        className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 w-full rounded-none"
+                        onClick={() => dispatch(clearFilter())}
+                    >
+                        Clear Filters
                     </button>
                 </div>
             )}
