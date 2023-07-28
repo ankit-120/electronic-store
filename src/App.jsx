@@ -8,6 +8,8 @@ import './App.css'
 import SingleProductPage from './pages/SingleProductPage';
 import Cart from './pages/Cart';
 import Footer from './components/Footer';
+import Login from './pages/Login';
+import { Toaster } from 'react-hot-toast';
 
 
 const App = () => {
@@ -24,11 +26,13 @@ const App = () => {
               <Route path='/contact' element={<Contact />} />
               <Route path='/product/:id' element={<SingleProductPage />} />
               <Route path='/cart' element={<Cart />} />
+              <Route path='/login' element={<Login />} />
             </Routes>
           </div>
         </div>
         <Footer />
       </BrowserRouter>
+      <Toaster />
     </div>
   )
 }
