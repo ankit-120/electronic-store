@@ -1,22 +1,46 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { addToCart } from '../facilities/cartSlice'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { addItemToCart, getMyCart } from '../apis';
+import { toast } from 'react-hot-toast';
 
 const AddToCart = ({ product }) => {
-    const dispatch = useDispatch();
 
+    //to re render when item is added to cart
     const [isAdded, setIsAdded] = useState(false);
+    const [cart, setCart] = useState([{ id: 0 }]);
 
+    const fetchCart = async () => {
+        const { data } = await axios.get(getMyCart(), { withCredentials: true })
+        if (data.success) {
+            setCart(data.cart.products);
+        }
+    }
+
+    //fetch user cart from db 
+    useEffect(() => {
+        fetchCart();
+    }, [isAdded])
+    //fn to check which product is in the cart
     const checkCart = () => {
-        const cart = JSON.parse(localStorage.getItem('cartItem')) || [];
         for (let i = 0; i < cart.length; i++) {
             if (cart[i].id === product.id) {
-                // setIsAdded(true)
                 return true;
             }
         }
         return false;
+    }
+
+    //fn to handle add to cart
+    const handleAddToCart = async () => {
+        const { data } = await axios.post(addItemToCart(), { product })
+        console.log(data)
+        if (data.success) {
+            toast(data.message);
+            setIsAdded(true);
+        } else {
+            toast("Cart error");
+        }
     }
 
     return (
@@ -39,8 +63,7 @@ const AddToCart = ({ product }) => {
                         (
                             <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105"
                                 onClick={() => {
-                                    dispatch(addToCart(product))
-                                    setIsAdded(true)
+                                    handleAddToCart()
                                 }}>
                                 Add to Cart
                             </button>

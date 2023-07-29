@@ -12,8 +12,8 @@ const commonSlice = createSlice({
         setIsAuthenticated: (state, action) => {
             state.isAuthenticated = !state.isAuthenticated;
         },
-        setIsLoggedIn: (state, action) => {
-            state.isLoggedin = !state.isLoggedin;
+        setIsLoggedIn: (state, { payload }) => {
+            state.isLoggedin = payload;
         }
     }
 })

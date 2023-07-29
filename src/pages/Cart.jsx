@@ -1,19 +1,35 @@
 import React, { useEffect, useState } from 'react'
 import CircularLoader from '../components/CircularLoader';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, clearCart } from '../facilities/cartSlice';
+import axios from 'axios';
+import { deleteAllProduct, deleteItemFromCart, getMyCart } from '../apis';
+import { toast } from 'react-hot-toast';
 
 const Cart = () => {
 
-    const cart = useSelector((state) => state.cart.cart);
-    const dispatch = useDispatch();
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [cart, setCart] = useState({});
+
+    const fetchCart = async () => {
+        const { data } = await axios.get(getMyCart(), { withCredentials: true })
+        setCart(data.cart);
+    }
 
     useEffect(() => {
-        setTotalPrice(cart.reduce((acc, curr) => acc + curr.price, 0));
-    }, [cart]);
+        fetchCart();
+    }, []);
 
-    if (!cart || cart.length === 0) {
+    const handleRemove = async (idx, id, price) => {
+        setCart({ ...cart, products: cart.products.filter((prod) => prod.id !== id), totalPrice: cart.totalPrice - price });
+        const { data } = await axios.delete(deleteItemFromCart(idx), { withCredentials: true });
+        toast(data.message);
+    }
+
+    const handleClear = async () => {
+        setCart({ ...cart, products: [], totalPrice: 0 })
+        const { data } = await axios.delete(deleteAllProduct(), { withCredentials: true });
+        toast(data.message);
+    }
+
+    if (Object.keys(cart).length === 0) {
         return <CircularLoader />
     }
 
@@ -21,7 +37,7 @@ const Cart = () => {
         <div className='grid grid-cols-3'>
             <div className='md:col-span-2 col-span-3 '>
                 {
-                    cart.map((item, i) => (
+                    cart.products.map((item, i) => (
                         <div key={i + 30}
                             className='grid grid-cols-4 border-[1px] border-slate-200 m-2'>
                             <div className='md:col-span-1 col-span-2 flex justify-center'>
@@ -45,7 +61,7 @@ const Cart = () => {
                                         </div>
                                     </div>
                                     <div className='md:pb-2 text-red-700 cursor-pointer'
-                                        onClick={() => dispatch(removeFromCart(item.id))}>
+                                        onClick={() => handleRemove(i, item.id, item.price)}>
                                         Remove
                                     </div>
                                 </div>
@@ -55,15 +71,15 @@ const Cart = () => {
                 }
                 <div className='flex justify-center'>
                     <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 rounded-none shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105"
-                        onClick={() => dispatch(clearCart())}>
+                        onClick={() => handleClear()}>
                         Clear Cart
                     </button>
                 </div>
             </div>
             <div className='md:col-span-1 col-span-3 bg-gray-100 py-2 px-4'>
                 <div className='font-bold text-xl'>Order Details</div>
-                <div>Total items : {cart.length}</div>
-                <div className='font-semibold'>Order total : ₹{totalPrice}</div>
+                <div>Total items : {cart.products.length}</div>
+                <div className='font-semibold'>Order total : ₹{cart.totalPrice}</div>
                 <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-2 px-4 md:mt-8 w-full rounded-none shadow-lg hover:shadow-xl transform transition-transform duration-300 hover:scale-105">
                     Proceed to Checkout
                 </button>

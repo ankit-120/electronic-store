@@ -29,3 +29,19 @@ export function login() {
 export function logout() {
     return `http://localhost:5000/api/logout`
 }
+
+export function addItemToCart() {
+    return `http://localhost:5000/api/cart/add`
+}
+
+export function getMyCart() {
+    return `http://localhost:5000/api/cart/mycart`
+}
+
+export function deleteItemFromCart(idx) {
+    return `http://localhost:5000/api/cart/mycart/${idx}`
+}
+
+export function deleteAllProduct() {
+    return `http://localhost:5000/api/cart/mycart`
+}

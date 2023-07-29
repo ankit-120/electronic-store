@@ -27,16 +27,22 @@ const Header = () => {
         setIsOpen(!isOpen);
     };
 
+    //fetches user profile to make sure user is logged in
     const fetchProfile = async () => {
         const { data } = await axios.get(getProfile(), { withCredentials: true })
         console.log(data.success)
         if (data.success) {
             setUser(data.user);
-            dispatch(setIsLoggedIn())
+            dispatch(setIsLoggedIn(true))
         }
 
     }
 
+    //set is logged in true - to confirm that user is logged in
+    useEffect(() => {
+        console.log("once")
+        fetchProfile()
+    }, []);
     useEffect(() => {
         fetchProfile()
     }, [isAuthenticated])
@@ -44,7 +50,7 @@ const Header = () => {
     const handleLogout = async () => {
         const { data } = await axios.get(logout(), { withCredentials: true })
         toast(data.message)
-        dispatch(setIsLoggedIn())
+        dispatch(setIsLoggedIn(false))
         navigate('/login')
     }
 
@@ -150,7 +156,7 @@ const Header = () => {
                                     >
                                         {/* Dropdown content */}
                                         <ul>
-                                            <li className="py-1 text-center"
+                                            <li className="py-1 text-center cursor-pointer"
                                                 onClick={() => (handleLogout())}>
                                                 Logout
                                             </li>
