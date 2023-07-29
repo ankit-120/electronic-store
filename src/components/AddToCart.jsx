@@ -33,7 +33,7 @@ const AddToCart = ({ product }) => {
 
     //fn to handle add to cart
     const handleAddToCart = async () => {
-        const { data } = await axios.post(addItemToCart(), { product })
+        const { data } = await axios.post(addItemToCart(), { product }, { withCredentials: true })
         console.log(data)
         if (data.success) {
             toast(data.message);
