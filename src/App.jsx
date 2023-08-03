@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Product from './pages/Product';
 import Contact from './pages/Contact';
+import AddProduct from './pages/AddProduct';
 import Header from './components/Header';
 import './App.css'
 import SingleProductPage from './pages/SingleProductPage';
@@ -27,6 +28,7 @@ const App = () => {
               <Route path='/product/:id' element={<SingleProductPage />} />
               <Route path='/cart' element={<Cart />} />
               <Route path='/login' element={<Login />} />
+              <Route path='/addProduct' element={<AddProduct />} />
             </Routes>
           </div>
         </div>

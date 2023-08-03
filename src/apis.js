@@ -15,33 +15,37 @@ export function getFeaturedProduct(limit) {
 }
 
 export function register() {
-    return `https://node-electronic-store-backend.onrender.com/api/register`
+    return `http://localhost:5000/api/register`
 }
 
 export function getProfile() {
-    return `https://node-electronic-store-backend.onrender.com/api/profile`
+    return `http://localhost:5000/api/profile`
 }
 
 export function login() {
-    return `https://node-electronic-store-backend.onrender.com/api/login`
+    return `http://localhost:5000/api/login`
 }
 
 export function logout() {
-    return `https://node-electronic-store-backend.onrender.com/api/logout`
+    return `http://localhost:5000/api/logout`
 }
 
 export function addItemToCart() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/add`
+    return `http://localhost:5000/api/cart/add`
 }
 
 export function getMyCart() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart`
+    return `http://localhost:5000/api/cart/mycart`
 }
 
 export function deleteItemFromCart(idx) {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart/${idx}`
+    return `http://localhost:5000/api/cart/mycart/${idx}`
 }
 
 export function deleteAllProduct() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart`
+    return `http://localhost:5000/api/cart/mycart`
+}
+
+export function addProduct() {
+    return `http://localhost:5000/api/product/add`
 }

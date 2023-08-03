@@ -30,10 +30,15 @@ const Login = () => {
                 },
                 withCredentials: true
             })
-            console.log(data)
+            toast.success('Registered successfully');
             navigate('/')
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data.message)
+            setFormData({
+                name: '',
+                email: '',
+                password: ''
+            })
         }
     }
 
@@ -48,11 +53,16 @@ const Login = () => {
                 },
                 withCredentials: true
             })
-            toast(data.message);
+            toast.success(data.message);
             dispatch(setIsAuthenticated())
             navigate('/');
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data.message);
+            setFormData({
+                name: '',
+                email: '',
+                password: ''
+            })
         }
     }
 
