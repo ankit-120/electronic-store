@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { addProduct } from '../apis'
 import { toast } from 'react-hot-toast'
+import { BiImageAdd } from 'react-icons/bi'
+import { MoonLoader } from 'react-spinners';
 
 const AddProduct = () => {
 
@@ -15,11 +17,15 @@ const AddProduct = () => {
         category: '',
     })
     const [images, setImages] = useState([])
+    const [loading, setLoading] = useState();
 
-    const handleImages = (e) => {
+    const handleImages = async (e) => {
+        setLoading(true);
         const files = e.target.files;
         const filesArray = Array.from(files);
         setImages(filesArray);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setLoading(false)
     }
 
     const handleSubmit = async (e) => {
@@ -182,23 +188,29 @@ const AddProduct = () => {
 
             <div className="mb-6">
                 <label className="block text-gray-800 text-sm font-semibold mb-2" htmlFor="images">
-                    Images
+                    Add Images<span className='text-3xl'><BiImageAdd /></span>
                 </label>
                 <input
                     type="file"
+                    id='images'
                     className="mb-3 focus:outline-none focus:shadow-outline"
                     multiple
                     onChange={handleImages}
                     required
                 />
-                <div>
-                    <h3 className="mb-2 font-medium">Selected Files</h3>
-                    <ul className="list-disc ml-6">
-                        {images.map((img, index) => (
-                            <li key={index} className="mb-1">{img.name}</li>
-                        ))}
-                    </ul>
-                </div>
+                {
+                    loading ? <MoonLoader color="black" size='30' />
+                        :
+                        <div>
+                            <h3 className={`mb-2 text-sm ${images.length ? 'block' : 'hidden'} `}>Selected Files</h3>
+                            <div className="list-disc ml-6 grid grid-cols-4 gap-2">
+                                {images.map((img, index) => (
+                                    // <li key={index} className="mb-1">{img.name}</li>
+                                    <div key={index} className="mb-1"><img src={URL.createObjectURL(img)} alt="" /></div>
+                                ))}
+                            </div>
+                        </div>
+                }
             </div>
 
             <button

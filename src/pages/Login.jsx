@@ -5,6 +5,9 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsAuthenticated } from '../facilities/commonSlice';
+import { BiSolidCamera } from 'react-icons/bi'
+import { MoonLoader } from 'react-spinners';
+import './Login.module.css'
 
 const Login = () => {
 
@@ -20,17 +23,36 @@ const Login = () => {
         email: '',
         password: ''
     });
-    console.log("log")
+
+    const [profile, setProfile] = useState({
+        url: '/images/default_profile.png',
+        avatar: ''
+    })
+
+    const [loading, setLoading] = useState();
+
+    const handleProfile = async (e) => {
+        setLoading(true)
+        setProfile({ url: URL.createObjectURL(e.target.files[0]), avatar: e.target.files[0] })
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setLoading(false)
+    }
 
     const handleSignup = async () => {
+        console.log(formData);
+        console.log(profile)
         try {
-            const { data } = await axios.post(register(), formData, {
+            const form_data = new FormData();
+            form_data.append('json', JSON.stringify(formData));
+            form_data.append('avatar', profile.avatar);
+            const { data } = await axios.post(register(), form_data, {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "multipart/form-data"
                 },
                 withCredentials: true
             })
-            toast.success('Registered successfully');
+            toast.success(data.message);
+            dispatch(setIsAuthenticated())
             navigate('/')
         } catch (error) {
             toast.error(error.response.data.message)
@@ -38,6 +60,10 @@ const Login = () => {
                 name: '',
                 email: '',
                 password: ''
+            })
+            setProfile({
+                url: '/images/default_profile.png',
+                avatar: ''
             })
         }
     }
@@ -114,6 +140,26 @@ const Login = () => {
                     value={formData.password}
                     onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 />
+            </div>
+            <div className={`mb-6 ${isClick ? 'hidden' : 'block'}`}>
+                <label className="block text-gray-800 text-sm font-semibold mb-2 cursor-pointer" htmlFor="profile">
+                    <span className='text-xl'><BiSolidCamera /></span>
+                    <span>Upload Profile</span>
+                    <input
+                        className=""
+                        id="profile"
+                        type="file"
+                        onChange={(e) => {
+                            handleProfile(e)
+                        }}
+                    />
+                </label>
+                <div className='w-full flex justify-center'>
+                    {loading ? <MoonLoader
+                        color="black"
+                        size='30'
+                    /> : <img src={profile.url} className='w-28 h-28 rounded-full' />}
+                </div>
             </div>
             <button
                 type="submit"
