@@ -3,40 +3,55 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     categoryList: [],
     brandList: [],
-    search: '',
-    price: '',
-}
+    filterList: {
+        category: "",
+        brand: "",
+    },
+    priceFilter: {
+        min: "",
+        max: "",
+    },
+};
 
 const filterSlice = createSlice({
-    name: 'filter',
+    name: "filter",
     initialState,
     reducers: {
         addCategory: (state, { payload }) => {
-            state.categoryList.push(payload);
+            state.categoryList = payload;
         },
-        removeCategory: (state, { payload }) => {
-            state.categoryList = state.categoryList.filter((category) => category !== payload);
+        setCategoryFilter: (state, { payload }) => {
+            state.filterList.category = payload;
         },
         addBrand: (state, { payload }) => {
-            state.brandList.push(payload);
+            state.brandList = payload;
         },
-        removeBrand: (state, { payload }) => {
-            state.brandList = state.brandList.filter((brand) => brand !== payload);
+        setBrandFilter: (state, { payload }) => {
+            state.filterList.brand = payload;
         },
-        updateSearch: (state, { payload }) => {
-            state.search = payload;
+        setPriceFilter: (state, { payload }) => {
+            state.priceFilter.min = payload.min;
+            state.priceFilter.max = payload.max;
         },
-        updatePrice: (state, { payload }) => {
-            state.price = payload
+        clearFilter: (state, { payload }) => {
+            state.filterList = {
+                category: "",
+                brand: "",
+            };
+            state.priceFilter = {
+                min: "",
+                max: "",
+            };
         },
-        clearFilter: (state, action) => {
-            state.categoryList = [];
-            state.price = '';
-            state.search = '';
-        }
-    }
+    },
 });
 
-export const { addCategory, removeCategory, updateSearch, updatePrice, clearFilter, addBrand, removeBrand } = filterSlice.actions;
-// export const { filterSmartphones, filterLaptops, filterSkincare, filterFragrances } = filterSlice.actions;
+export const {
+    addCategory,
+    setCategoryFilter,
+    addBrand,
+    setBrandFilter,
+    setPriceFilter,
+    clearFilter,
+} = filterSlice.actions;
 export default filterSlice.reducer;

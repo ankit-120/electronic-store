@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Product from './pages/Product';
 import Contact from './pages/Contact';
+import AddProduct from './pages/AddProduct';
 import Header from './components/Header';
 import './App.css'
 import SingleProductPage from './pages/SingleProductPage';
@@ -10,7 +11,7 @@ import Cart from './pages/Cart';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
-
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -23,10 +24,18 @@ const App = () => {
               <Route path='/' element={<Home />} />
               <Route path='/about' element={<About />} />
               <Route path='/products' element={<Product />} />
+              <Route path='/products/:keyword' element={<Product />} />
               <Route path='/contact' element={<Contact />} />
               <Route path='/product/:id' element={<SingleProductPage />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/login' element={<Login />} />
+              {/* <Route path='/login' element={
+                <ProtectedRoute>
+                <Login />
+              </ProtectedRoute>} /> */}
+              <Route element={<ProtectedRoute />}>
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/addProduct' element={<AddProduct />} />
+              </Route>
+              <Route path='login' element={<Login />} />
             </Routes>
           </div>
         </div>

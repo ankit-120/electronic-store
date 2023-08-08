@@ -18,7 +18,7 @@ const Cart = () => {
     }, []);
 
     const handleRemove = async (idx, id, price) => {
-        setCart({ ...cart, products: cart.products.filter((prod) => prod.id !== id), totalPrice: cart.totalPrice - price });
+        setCart({ ...cart, products: cart.products.filter((prod) => prod._id !== id), totalPrice: cart.totalPrice - price });
         const { data } = await axios.delete(deleteItemFromCart(idx), { withCredentials: true });
         toast(data.message);
     }
@@ -42,7 +42,7 @@ const Cart = () => {
                             className='grid grid-cols-4 border-[1px] border-slate-200 m-2'>
                             <div className='md:col-span-1 col-span-2 flex justify-center'>
                                 <img className='md:h-32 h-40 p-2'
-                                    src={item.thumbnail}
+                                    src={`${import.meta.env.VITE_URL}/images/${item.images[0]}`}
                                     alt="img" />
                             </div>
                             <div className='md:col-span-3 col-span-2 grid grid-cols-4'>
@@ -61,7 +61,7 @@ const Cart = () => {
                                         </div>
                                     </div>
                                     <div className='md:pb-2 text-red-700 cursor-pointer'
-                                        onClick={() => handleRemove(i, item.id, item.price)}>
+                                        onClick={() => handleRemove(i, item._id, item.price)}>
                                         Remove
                                     </div>
                                 </div>

@@ -1,22 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isAuthenticated: false,
-    isLoggedin: false,
-}
+    isAuthenticated: null,
+    isAdmin: null,
+};
 
 const commonSlice = createSlice({
     name: "common",
     initialState,
     reducers: {
-        setIsAuthenticated: (state, action) => {
-            state.isAuthenticated = !state.isAuthenticated;
+        setIsAuthenticated: (state, { payload }) => {
+            state.isAuthenticated = payload;
         },
-        setIsLoggedIn: (state, { payload }) => {
-            state.isLoggedin = payload;
-        }
-    }
-})
+        setIsAdmin: (state, { payload }) => {
+            state.isAdmin = payload;
+        },
+    },
+});
 
-export const { setIsAuthenticated, setIsLoggedIn } = commonSlice.actions;
+export const { setIsAuthenticated, setIsAdmin } = commonSlice.actions;
 export default commonSlice.reducer;

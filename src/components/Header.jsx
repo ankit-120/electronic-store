@@ -1,58 +1,47 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateSearch } from '../facilities/filterSlice';
 import { useLocation } from 'react-router-dom';
-import { getProfile, logout } from '../apis';
+import { getProfile } from '../apis';
 import axios from 'axios';
-import { setIsLoggedIn } from '../facilities/commonSlice';
-import { toast } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { setIsAdmin, setIsAuthenticated } from '../facilities/commonSlice';
+import LoginBtn from './LoginBtn';
+import SearchBox from './SearchBox';
 
 
 const Header = () => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const location = useLocation();
-    const isProductPage = location.pathname.includes('/products');
+
     const [showMenu, setShowMenu] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
     const [user, setUser] = useState({});
-    const { isAuthenticated, isLoggedin } = useSelector((state) => state.common);
+    const location = useLocation()
+    const isProductPage = location.pathname.includes('/products');
+
+    const { isAuthenticated } = useSelector((state) => state.common);
 
     const toggleMenu = () => {
         setShowMenu(!showMenu);
-    };
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
     };
 
     //fetches user profile to make sure user is logged in
     const fetchProfile = async () => {
         const { data } = await axios.get(getProfile(), { withCredentials: true })
-        console.log(data.success)
         if (data.success) {
             setUser(data.user);
-            dispatch(setIsLoggedIn(true))
+            if (data.user.role === 'admin') {
+                dispatch(setIsAdmin(true))
+            }
+            dispatch(setIsAuthenticated(true))
+            console.log("setting state")
+        } else {
+            dispatch(setIsAuthenticated(false))
+            dispatch(setIsAdmin(false))
         }
-
     }
 
-    //set is logged in true - to confirm that user is logged in
-    useEffect(() => {
-        console.log("once")
-        fetchProfile()
-    }, []);
     useEffect(() => {
         fetchProfile()
     }, [isAuthenticated])
-
-    const handleLogout = async () => {
-        const { data } = await axios.get(logout(), { withCredentials: true })
-        toast(data.message)
-        dispatch(setIsLoggedIn(false))
-        navigate('/login')
-    }
 
     return (
         <div>
@@ -67,7 +56,13 @@ const Header = () => {
                             />
                             <span className="ml-3 text-xl">Electronic Store</span>
                         </div>
-                        <div className="md:hidden">
+
+                        {/* login btn hidden at md devices */}
+                        {/* hidden at md screens */}
+                        <div className="md:hidden flex items-center">
+                            <div className='mx-4'>
+                                <LoginBtn user={user} />
+                            </div>
                             <button
                                 onClick={toggleMenu}
                                 className="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-900 hover:text-gray-500 hover:border-gray-500 focus:outline-none transition duration-300 ease-in-out"
@@ -98,17 +93,14 @@ const Header = () => {
                         </div>
                     </div>
 
+                    {/* search box.................................................................. */}
                     {isProductPage && (
-                        <div className={`md:ml-4 md:block ${showMenu ? 'block' : 'hidden'}`}>
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="block pl-4 pr-10 py-2 rounded border border-gray-300 focus:outline-none focus:ring focus:border-blue-500 transition duration-300 ease-in-out"
-                                onChange={(e) => dispatch(updateSearch(e.target.value))}
-                            />
+                        <div className={`md:ml-4 md:block mt-5 md:mt-0`}>
+                            <SearchBox />
                         </div>
                     )}
 
+                    {/* menu items............................................... */}
                     <nav className={`md:flex ${showMenu ? 'block' : 'hidden'} mt-4 md:mt-0`}>
                         <Link to={'/'}
                             className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
@@ -135,36 +127,10 @@ const Header = () => {
                             Contact
                         </Link>
 
-
-                        {
-                            !isLoggedin ? (
-                                <Link to={'/login'}
-                                    className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
-                                    Login
-                                    {/* {isAuthenticated || Object.keys(user).length !== 0 ? user.name : 'Login'} */}
-                                </Link>
-                            ) : (
-                                <div className="relative">
-                                    <div
-                                        onClick={toggleDropdown}
-                                        className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 cursor-pointer"
-                                    >
-                                        {user.name}
-                                    </div>
-                                    <div
-                                        className={`absolute top-10 right-0 bg-white shadow-lg p-2 ${isOpen ? 'opacity-100' : 'opacity-0'} transform transition-all duration-400 ease-in-out rounded-md w-32`}
-                                    >
-                                        {/* Dropdown content */}
-                                        <ul>
-                                            <li className="py-1 text-center cursor-pointer"
-                                                onClick={() => (handleLogout())}>
-                                                Logout
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            )
-                        }
+                        {/* Login................................................................................. */}
+                        <div className='hidden md:block'>
+                            <LoginBtn user={user} />
+                        </div>
                     </nav>
                 </div>
             </header>

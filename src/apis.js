@@ -1,47 +1,56 @@
 export function getProducts() {
-    return 'https://dummyjson.com/products?limit=20';
+    // return 'https://dummyjson.com/products?limit=20';
+    return `${import.meta.env.VITE_URL}/api/product`;
 }
 
 export function getCategories() {
-    return 'https://dummyjson.com/products/categories';
+    return `${import.meta.env.VITE_URL}/api/product/categories`;
+}
+
+export function getBrands() {
+    return `${import.meta.env.VITE_URL}/api/product/brands`;
 }
 
 export function getProduct(id) {
-    return `https://dummyjson.com/products/${id}`
+    return `${import.meta.env.VITE_URL}/api/product/${id}`;
 }
 
 export function getFeaturedProduct(limit) {
-    return `https://dummyjson.com/products?limit=${limit}&skip=3`
+    return `https://dummyjson.com/products?limit=${limit}&skip=3`;
 }
 
 export function register() {
-    return `https://node-electronic-store-backend.onrender.com/api/register`
+    return `${import.meta.env.VITE_URL}/api/register`;
 }
 
 export function getProfile() {
-    return `https://node-electronic-store-backend.onrender.com/api/profile`
+    return `${import.meta.env.VITE_URL}/api/profile`;
 }
 
 export function login() {
-    return `https://node-electronic-store-backend.onrender.com/api/login`
+    return `${import.meta.env.VITE_URL}/api/login`;
 }
 
 export function logout() {
-    return `https://node-electronic-store-backend.onrender.com/api/logout`
+    return `${import.meta.env.VITE_URL}/api/logout`;
 }
 
 export function addItemToCart() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/add`
+    return `${import.meta.env.VITE_URL}/api/cart/add`;
 }
 
 export function getMyCart() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart`;
 }
 
 export function deleteItemFromCart(idx) {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart/${idx}`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart/${idx}`;
 }
 
 export function deleteAllProduct() {
-    return `https://node-electronic-store-backend.onrender.com/api/cart/mycart`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart`;
+}
+
+export function addProduct() {
+    return `${import.meta.env.VITE_URL}/api/product/add`;
 }
