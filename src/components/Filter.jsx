@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryFilter, setBrandFilter, setPriceFilter, clearFilter } from '../facilities/filterSlice'
+import { BiFilter } from 'react-icons/bi'
 
 const Filter = () => {
 
@@ -74,7 +75,7 @@ const Filter = () => {
                 </div>
                 <div className='text-center p-2'>
                     <button
-                        className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300"
+                        className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300 transition-transform duration-100 hover:scale-110"
                         onClick={() => dispatch(setPriceFilter(price))}>
                         Go
                     </button>
@@ -84,7 +85,7 @@ const Filter = () => {
             {/* clear filter  */}
             <div className='text-center p-2'>
                 <button
-                    className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300"
+                    className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300 transition-transform duration-100 hover:scale-110"
                     onClick={() => dispatch(clearFilter())}>
                     Clear Filters
                 </button>

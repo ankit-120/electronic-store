@@ -22,7 +22,7 @@ const SearchBox = () => {
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
                 />
-                <button className="bg-transparent text-yellow-500 p-2 rounded-full hover:bg-yellow-100 focus:outline-none"
+                <button className="bg-transparent text-yellow-500 p-2 rounded-full hover:bg-yellow-100 focus:outline-none transition-transform duration-100 hover:scale-110"
                     onClick={() => dispatch(setSearch(keyword))}>
                     <AiOutlineSearch size={20} />
                 </button>

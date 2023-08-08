@@ -7,6 +7,7 @@ import axios from 'axios';
 import { setIsAdmin, setIsAuthenticated } from '../facilities/commonSlice';
 import LoginBtn from './LoginBtn';
 import SearchBox from './SearchBox';
+import Dropdown from './Dropdown';
 
 
 const Header = () => {
@@ -47,8 +48,8 @@ const Header = () => {
         <div>
             <header className="bg-slate-200 shadow-md fixed top-0 z-50 w-full">
                 <div className="container mx-auto px-5 py-3 md:flex md:justify-between md:items-center">
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
+                    <div className="flex items-center justify-between ">
+                        <div className="flex items-center transition-transform duration-100 hover:scale-105">
                             <img
                                 className="w-10 h-10"
                                 src="/images/logo.png"
@@ -99,31 +100,34 @@ const Header = () => {
                             <SearchBox />
                         </div>
                     )}
+                    <div className='flex md:hidden justify-end mt-2 cursor-pointer relative'>
+                        <Dropdown />
+                    </div>
 
                     {/* menu items............................................... */}
                     <nav className={`md:flex ${showMenu ? 'block' : 'hidden'} mt-4 md:mt-0`}>
                         <Link to={'/'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                             Home
                         </Link>
 
                         <Link to={'/about'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                             About
                         </Link>
 
                         <Link to={'/products'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                             Products
                         </Link>
 
                         <Link to={'/cart'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                             Cart
                         </Link>
 
                         <Link to={'/contact'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900">
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                             Contact
                         </Link>
 

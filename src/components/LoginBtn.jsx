@@ -27,14 +27,14 @@ const LoginBtn = ({ user }) => {
             {
                 !isAuthenticated ? (
                     <Link to={'/login'}
-                        className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 md:mb-0 hover:text-gray-900">
+                        className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
                         Login
                     </Link>
                 ) : (
                     <div className="relative">
                         <div
                             onClick={() => setIsOpen(!isOpen)}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 cursor-pointer"
+                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 cursor-pointer transition-transform duration-100 hover:scale-125"
                         >
                             {user.name}
                         </div>
@@ -42,7 +42,7 @@ const LoginBtn = ({ user }) => {
                             className={`absolute top-10 right-0 bg-white shadow-lg p-2 ${isOpen ? 'opacity-100' : 'opacity-0'} transform transition-all duration-400 ease-in-out rounded-md w-32`}
                         >
                             <ul>
-                                <li className="py-1 text-center cursor-pointer"
+                                <li className="py-1 text-center cursor-pointer transition-transform duration-100 hover:scale-125"
                                     onClick={() => (handleLogout())}>
                                     Logout
                                 </li>
