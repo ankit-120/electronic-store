@@ -48,7 +48,7 @@ const Header = () => {
         <div>
             <header className="bg-slate-200 shadow-md fixed top-0 z-50 w-full">
                 <div className="container mx-auto px-5 py-3 md:flex md:justify-between md:items-center">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between ">
                         <div className="flex items-center transition-transform duration-100 hover:scale-105">
                             <img
                                 className="w-10 h-10"
