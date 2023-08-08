@@ -90,7 +90,7 @@ const Product = () => {
 
     return (
         <div className="grid grid-cols-4">
-            <div className="col-span-4 md:col-span-1 mt-5 shadow-lg rounded-lg">
+            <div className="col-span-4 md:col-span-1 mt-5 shadow-lg rounded-lg md:block hidden">
                 <Filter />
             </div>
             <div className="col-span-4 md:col-span-3">
