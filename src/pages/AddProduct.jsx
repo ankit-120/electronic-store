@@ -1,12 +1,15 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { addProduct } from '../apis'
 import { toast } from 'react-hot-toast'
 import { BiImageAdd } from 'react-icons/bi'
 import { MoonLoader } from 'react-spinners';
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 const AddProduct = () => {
 
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: "",
         description: '',
@@ -18,6 +21,8 @@ const AddProduct = () => {
     })
     const [images, setImages] = useState([])
     const [loading, setLoading] = useState();
+
+    const { isAuthenticated } = useSelector((state) => state.common)
 
     const handleImages = async (e) => {
         setLoading(true);
@@ -77,6 +82,14 @@ const AddProduct = () => {
             console.log(error)
         }
     }
+
+    //only admin can acces this page
+    // useEffect(() => {
+    //     console.log(isAuthenticated)
+    //     if (!isAuthenticated) {
+    //         navigate('/');
+    //     }
+    // }, [])
 
     return (
         <div className="max-w-xl mx-auto mt-8 p-6 bg-slate-100 rounded shadow-md">

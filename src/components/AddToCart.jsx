@@ -21,10 +21,11 @@ const AddToCart = ({ product }) => {
     useEffect(() => {
         fetchCart();
     }, [isAdded])
+
     //fn to check which product is in the cart
     const checkCart = () => {
         for (let i = 0; i < cart.length; i++) {
-            if (cart[i].id === product.id) {
+            if (cart[i]._id === product._id) {
                 return true;
             }
         }

@@ -1,84 +1,98 @@
-import { useState, useEffect } from 'react';
-import FilterDropdown from './FilterDropdown';
-import { useDispatch, useSelector } from 'react-redux';
-import PriceFilterDropdown from './PriceFilterDropdown';
-import { clearFilter } from '../facilities/filterSlice';
-import { addCategory, removeCategory, addBrand, removeBrand } from '../facilities/filterSlice';
+import React, { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { setCategoryFilter, setBrandFilter, setPriceFilter, clearFilter } from '../facilities/filterSlice'
 
 const Filter = () => {
-    const [isSmallScreen, setIsSmallScreen] = useState(false);
-    const [showContent, setShowContent] = useState(false);
+
     const { categoryList, brandList } = useSelector((state) => state.filters);
-    const products = useSelector((state) => state.products.products);
+    const { filterList, priceFilter } = useSelector((state) => state.filters);
+    const [price, setPrice] = useState({
+        min: priceFilter.min,
+        max: priceFilter.max
+    })
     const dispatch = useDispatch();
 
-    const setCategories = () => {
-        return [...new Set(products.map((product) => product.category))];
-    };
-
-    const setBrands = () => {
-        return [...new Set(products.map((product) => product.brand))];
-    };
-
-    useEffect(() => {
-        const checkScreenSize = () => {
-            setIsSmallScreen(window.innerWidth < 768); // Adjust the breakpoint as needed
-        };
-
-        checkScreenSize();
-        window.addEventListener('resize', checkScreenSize);
-
-        return () => window.removeEventListener('resize', checkScreenSize);
-    }, []);
-
-    const toggleContent = () => {
-        setShowContent(!showContent);
-    };
-
     return (
-        <div className="bg-white rounded-md p-4 shadow-md">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold">Filter Options</h2>
-                {isSmallScreen && (
-                    <button
-                        onClick={toggleContent}
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
-                    >
-                        {showContent ? 'Hide Filters' : 'Show Filters'}
-                    </button>
-                )}
+        <div className='pt-5 px-2'>
+            <div className='text-3xl font-semibold text-center py-2'>Filter</div>
+
+            {/* category filter  */}
+            <div className='py-2'>
+                <div className='text-md ml-1'>Category</div>
+                <select className="block w-full px-2 py-1 bg-slate-50 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-slate-500 outline-none"
+                    value={filterList.category}
+                    onChange={(e) => dispatch(setCategoryFilter(e.target.value))}>
+                    <option value="" >All Product</option>
+                    {categoryList.map((item, i) => (
+                        <option
+                            className='py-5 block'
+                            key={i + 10}
+                            value={item}
+                        >
+                            {item}
+                        </option>
+                    ))}
+                </select>
             </div>
 
-            {(!isSmallScreen || showContent) && (
-                <div className="space-y-4">
-                    <FilterDropdown filters={setCategories()} selectedFilters={categoryList} add={addCategory} remove={removeCategory} />
-                    <FilterDropdown filters={setBrands()} selectedFilters={brandList} add={addBrand} remove={removeBrand} />
-                    <PriceFilterDropdown />
-                    {!isSmallScreen && (
-                        <div className="flex justify-center">
-                            <button
-                                className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 w-full rounded-none"
-                                onClick={() => dispatch(clearFilter())}
-                            >
-                                Clear Filters
-                            </button>
-                        </div>
-                    )}
-                </div>
-            )}
+            <div className='py-2'>
+                <div className='text-md ml-1'>Brand</div>
+                <select className="block w-full px-2 py-1 bg-slate-50 rounded-md shadow-sm focus:ring focus:ring-opacity-50 focus:ring-slate-500 outline-none"
+                    value={filterList.brand}
+                    onChange={(e) => dispatch(setBrandFilter(e.target.value))}>
+                    <option value="">All Brand</option>
+                    {brandList.map((item, i) => (
+                        <option
+                            className='py-5 block'
+                            key={i + 10}
+                            value={item}
+                        >
+                            {item}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
-            {isSmallScreen && showContent && (
-                <div className="mt-4">
+            {/* price filter  */}
+            <div>
+                <div className='text-md ml-1'>Price</div>
+                <div className='flex'>
+                    <input
+                        className='w-full rounded-md mr-2 px-4 py-1 outline-none focus:ring focus:ring-opacity-50 focus:ring-slate-500'
+                        placeholder='Min'
+                        type="text"
+                        value={price.min}
+                        // value={priceFilter.min !== '' ? priceFilter.min : price.min}
+                        onChange={(e) => setPrice({ ...price, min: e.target.value })} />
+                    <input
+                        className='w-full rounded-md ml-2 px-4 py-1 outline-none focus:ring focus:ring-opacity-50 focus:ring-slate-500'
+                        placeholder='Max'
+                        type="text"
+                        value={price.max}
+                        // value={priceFilter.max !== '' ? priceFilter.max : price.max}
+                        onChange={(e) => setPrice({ ...price, max: e.target.value })} />
+                </div>
+                <div className='text-center p-2'>
                     <button
-                        className="bg-slate-500 hover:bg-slate-700 text-white font-bold py-2 px-4 w-full rounded-none"
-                        onClick={() => dispatch(clearFilter())}
-                    >
-                        Clear Filters
+                        className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300"
+                        onClick={() => dispatch(setPriceFilter(price))}>
+                        Go
                     </button>
                 </div>
-            )}
-        </div>
-    );
-};
+            </div>
 
-export default Filter;
+            {/* clear filter  */}
+            <div className='text-center p-2'>
+                <button
+                    className="px-4 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600 focus:outline-none focus:ring focus:border-blue-300"
+                    onClick={() => dispatch(clearFilter())}>
+                    Clear Filters
+                </button>
+            </div>
+
+        </div >
+
+    )
+}
+
+export default Filter

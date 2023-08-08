@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { login, register } from '../apis';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsAuthenticated } from '../facilities/commonSlice';
+import { setIsAuthenticated, setIsAdmin } from '../facilities/commonSlice';
 import { BiSolidCamera } from 'react-icons/bi'
 import { MoonLoader } from 'react-spinners';
 import './Login.module.css'
@@ -14,7 +14,7 @@ const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { isLoggedin } = useSelector((state) => state.common);
+    const { isAuthenticated } = useSelector((state) => state.common);
 
     const [isClick, setIsClick] = useState(false);
 
@@ -52,7 +52,8 @@ const Login = () => {
                 withCredentials: true
             })
             toast.success(data.message);
-            dispatch(setIsAuthenticated())
+            dispatch(setIsAuthenticated(true))
+            dispatch(setIsAdmin(false))
             navigate('/')
         } catch (error) {
             toast.error(error.response.data.message)
@@ -80,7 +81,12 @@ const Login = () => {
                 withCredentials: true
             })
             toast.success(data.message);
-            dispatch(setIsAuthenticated())
+            dispatch(setIsAuthenticated(true))
+            if (data.user.role === 'admin') {
+                dispatch(setIsAdmin(true));
+            } else {
+                dispatch(setIsAdmin(false))
+            }
             navigate('/');
         } catch (error) {
             toast.error(error.response.data.message);
@@ -92,9 +98,9 @@ const Login = () => {
         }
     }
 
-    useEffect(() => {
-        if (isLoggedin) navigate('/')
-    })
+    if (isAuthenticated) {
+        return <Navigate to={'/'} />
+    }
 
 
     return (

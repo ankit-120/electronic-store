@@ -14,7 +14,7 @@ const SingleProductPage = () => {
 
     const fetchProduct = async () => {
         const { data } = await axios.get(getProduct(id));
-        setProduct(data);
+        setProduct(data.product);
     }
     product && console.log("cond ", product)
 
@@ -33,7 +33,7 @@ const SingleProductPage = () => {
             </div>
             <div className='col-span-6 md:col-span-3 flex-grow'>
                 <img className='md:h-[500px] h-[300px] w-full object-contain'
-                    src={selectedImage} alt="no prod" />
+                    src={`${import.meta.env.VITE_URL}/images/${selectedImage}`} alt="no prod" />
             </div>
             <div className='col-span-6 md:col-span-2 w-[90vw] md:w-full md:flex md:flex-col md:justify-center'>
                 <AddToCart product={product} />

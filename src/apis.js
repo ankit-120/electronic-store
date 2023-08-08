@@ -1,51 +1,56 @@
 export function getProducts() {
-    return 'https://dummyjson.com/products?limit=20';
+    // return 'https://dummyjson.com/products?limit=20';
+    return `${import.meta.env.VITE_URL}/api/product`;
 }
 
 export function getCategories() {
-    return 'https://dummyjson.com/products/categories';
+    return `${import.meta.env.VITE_URL}/api/product/categories`;
+}
+
+export function getBrands() {
+    return `${import.meta.env.VITE_URL}/api/product/brands`;
 }
 
 export function getProduct(id) {
-    return `https://dummyjson.com/products/${id}`
+    return `${import.meta.env.VITE_URL}/api/product/${id}`;
 }
 
 export function getFeaturedProduct(limit) {
-    return `https://dummyjson.com/products?limit=${limit}&skip=3`
+    return `https://dummyjson.com/products?limit=${limit}&skip=3`;
 }
 
 export function register() {
-    return `http://localhost:5000/api/register`
+    return `${import.meta.env.VITE_URL}/api/register`;
 }
 
 export function getProfile() {
-    return `http://localhost:5000/api/profile`
+    return `${import.meta.env.VITE_URL}/api/profile`;
 }
 
 export function login() {
-    return `http://localhost:5000/api/login`
+    return `${import.meta.env.VITE_URL}/api/login`;
 }
 
 export function logout() {
-    return `http://localhost:5000/api/logout`
+    return `${import.meta.env.VITE_URL}/api/logout`;
 }
 
 export function addItemToCart() {
-    return `http://localhost:5000/api/cart/add`
+    return `${import.meta.env.VITE_URL}/api/cart/add`;
 }
 
 export function getMyCart() {
-    return `http://localhost:5000/api/cart/mycart`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart`;
 }
 
 export function deleteItemFromCart(idx) {
-    return `http://localhost:5000/api/cart/mycart/${idx}`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart/${idx}`;
 }
 
 export function deleteAllProduct() {
-    return `http://localhost:5000/api/cart/mycart`
+    return `${import.meta.env.VITE_URL}/api/cart/mycart`;
 }
 
 export function addProduct() {
-    return `http://localhost:5000/api/product/add`
+    return `${import.meta.env.VITE_URL}/api/product/add`;
 }

@@ -15,7 +15,7 @@ const ImageList = ({ images }) => {
                 images.map((image, i) => (
                     <div className='md:px-8 px-2 py-1' key={i + 20}>
                         <img className='border-2 border-gray-300 p-1 w-20 h-20 object-contain'
-                            src={image} alt="no image"
+                            src={`http://localhost:5000/images/${image}`} alt="no image"
                             onClick={() => dispatch(updateImage(image))}
                         />
                     </div>
