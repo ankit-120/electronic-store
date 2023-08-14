@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setCategoryFilter, setBrandFilter, setPriceFilter, clearFilter } from '../facilities/filterSlice'
-import { BiFilter } from 'react-icons/bi'
+
 
 const Filter = () => {
 

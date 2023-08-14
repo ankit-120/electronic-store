@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom';
 import { login, register } from '../apis';
 import axios from 'axios';
@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsAuthenticated, setIsAdmin } from '../facilities/commonSlice';
 import { BiSolidCamera } from 'react-icons/bi'
 import { MoonLoader } from 'react-spinners';
+import { setUserInfo } from '../facilities/userSlice';
 import './Login.module.css'
 
 const Login = () => {
@@ -52,6 +53,7 @@ const Login = () => {
                 withCredentials: true
             })
             toast.success(data.message);
+            dispatch(setUserInfo(data.user));
             dispatch(setIsAuthenticated(true))
             dispatch(setIsAdmin(false))
             navigate('/')
@@ -82,6 +84,7 @@ const Login = () => {
             })
             toast.success(data.message);
             dispatch(setIsAuthenticated(true))
+            dispatch(setUserInfo(data.user));
             if (data.user.role === 'admin') {
                 dispatch(setIsAdmin(true));
             } else {

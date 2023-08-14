@@ -12,6 +12,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserAccount from './pages/UserAccount';
 
 const App = () => {
   return (
@@ -31,8 +32,11 @@ const App = () => {
                 <ProtectedRoute>
                 <Login />
               </ProtectedRoute>} /> */}
-              <Route element={<ProtectedRoute />}>
+              <Route element={<ProtectedRoute adminRoute={false} />}>
                 <Route path='/cart' element={<Cart />} />
+                <Route path='/account' element={<UserAccount />} />
+              </Route>
+              <Route element={<ProtectedRoute adminRoute={true} />}>
                 <Route path='/addProduct' element={<AddProduct />} />
               </Route>
               <Route path='login' element={<Login />} />
