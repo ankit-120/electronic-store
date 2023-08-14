@@ -8,6 +8,7 @@ import { setIsAdmin, setIsAuthenticated } from '../facilities/commonSlice';
 import LoginBtn from './LoginBtn';
 import SearchBox from './SearchBox';
 import Dropdown from './Dropdown';
+import { setUserInfo } from '../facilities/userSlice';
 
 
 const Header = () => {
@@ -31,8 +32,11 @@ const Header = () => {
             setUser(data.user);
             if (data.user.role === 'admin') {
                 dispatch(setIsAdmin(true))
+            } else {
+                dispatch(setIsAdmin(false))
             }
             dispatch(setIsAuthenticated(true))
+            dispatch(setUserInfo(data.user));
             console.log("setting state")
         } else {
             dispatch(setIsAuthenticated(false))
@@ -47,7 +51,7 @@ const Header = () => {
     return (
         <div>
             <header className="bg-slate-200 shadow-md fixed top-0 z-50 w-full">
-                <div className="container mx-auto px-5 py-3 md:flex md:justify-between md:items-center">
+                <div className="container mx-auto px-5 py-3 md:flex md:justify-between md:items-center w-full">
                     <div className="flex items-center justify-between ">
                         <div className="flex items-center transition-transform duration-100 hover:scale-105">
                             <img
@@ -105,37 +109,40 @@ const Header = () => {
                     </div>
 
                     {/* menu items............................................... */}
-                    <nav className={`md:flex ${showMenu ? 'block' : 'hidden'} mt-4 md:mt-0`}>
-                        <Link to={'/'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
-                            Home
-                        </Link>
+                    <div>
+                        <nav className={`md:flex ${showMenu ? 'block' : 'hidden'} mt-4 md:mt-0`}>
+                            <Link to={'/'}
+                                className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
+                                Home
+                            </Link>
 
-                        <Link to={'/about'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
-                            About
-                        </Link>
+                            <Link to={'/about'}
+                                className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
+                                About
+                            </Link>
 
-                        <Link to={'/products'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
-                            Products
-                        </Link>
+                            <Link to={'/products'}
+                                className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
+                                Products
+                            </Link>
 
-                        <Link to={'/cart'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
-                            Cart
-                        </Link>
+                            <Link to={'/cart'}
+                                className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
+                                Cart
+                            </Link>
 
-                        <Link to={'/contact'}
-                            className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
-                            Contact
-                        </Link>
+                            <Link to={'/contact'}
+                                className="flex justify-center w-full md:flex md:flex-col md:justify-center ml-0 md:ml-4 mb-2 md:mb-0 hover:text-gray-900 transition-transform duration-100 hover:scale-125">
+                                Contact
+                            </Link>
 
-                        {/* Login................................................................................. */}
-                        <div className='hidden md:block'>
-                            <LoginBtn user={user} />
-                        </div>
-                    </nav>
+                            {/* Login................................................................................. */}
+                            <div className='hidden md:block'>
+                                <LoginBtn />
+                            </div>
+
+                        </nav>
+                    </div>
                 </div>
             </header>
         </div>

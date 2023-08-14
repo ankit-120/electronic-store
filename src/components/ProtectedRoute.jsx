@@ -7,12 +7,12 @@ import { setIsAdmin } from '../facilities/commonSlice';
 import { toast } from 'react-hot-toast';
 
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children, adminRoute }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { isAdmin, isAuthenticated } = useSelector((state) => state.common);
-
+    console.log(adminRoute)
 
     const fetchProfile = async () => {
         try {
@@ -37,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
             toast.error('Login First')
             navigate('/login')
         }
-        else if (!isAdmin) {
+        else if (adminRoute && !isAdmin) {
             navigate('/')
         }
     }, [])

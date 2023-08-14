@@ -54,3 +54,7 @@ export function deleteAllProduct() {
 export function addProduct() {
     return `${import.meta.env.VITE_URL}/api/product/add`;
 }
+
+export function updateProfile() {
+    return `${import.meta.env.VITE_URL}/api/updateProfile`;
+}
