@@ -1,4 +1,5 @@
 const SingleProduct = ({ prod }) => {
+    console.log(prod)
     return (
         <div className="w-full p-3 hover:shadow-lg flex flex-col items-center transition-transform duration-100 hover:scale-105">
             <div className="p-2">
